@@ -8,11 +8,13 @@ variable "aws_region" {
 }
 
 variable "vpc_id" {
-  type = string
+  description = "VPC ID where ECS service runs"
+  type        = string
 }
 
 variable "public_subnets" {
-  type = list(string)
+  description = "List of subnet IDs for ECS tasks"
+  type        = list(string)
 }
 
 
