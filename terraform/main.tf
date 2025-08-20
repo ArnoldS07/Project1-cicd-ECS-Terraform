@@ -22,6 +22,6 @@ module "ecs" {
 
 module "remote_backend" {
   source              = "./modules/backend"
-  bucket_name         = "terraform-state-backend"
+  bucket_name         = "terraform-state-backend777"
   dynamodb_table_name = "terraform-state-lock-table"
 }
