@@ -53,7 +53,27 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-# Task Definition
+# Task role
+resource "aws_iam_role" "ecs_task_execution_role" {
+  name = "${var.project_name}-task-execution-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "ecs-tasks.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+# task definition
 resource "aws_ecs_task_definition" "app" {
   family                   = "${var.project_name}-task"
   network_mode             = "awsvpc"
@@ -61,20 +81,20 @@ resource "aws_ecs_task_definition" "app" {
   cpu                      = "256"
   memory                   = "512"
 
-  container_definitions = jsonencode([
-    {
-      name      = "app"
-      image     = var.image_uri
-      essential = true
-      portMappings = [
-        {
-          containerPort = 80
-          hostPort      = 80
-        }
-      ]
-    }
-  ])
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn   
+  task_role_arn      = aws_iam_role.ecs_task_execution_role.arn  
+
+  container_definitions = jsonencode([{
+    name      = "${var.project_name}-container"
+    image     = var.image_uri
+    essential = true
+    portMappings = [{
+      containerPort = 80
+      hostPort      = 80
+    }]
+  }])
 }
+
 
 # ECS Service
 resource "aws_ecs_service" "app" {
