@@ -3,5 +3,5 @@ WORKDIR /app
 COPY app/requirements.txt .
 RUN apt install -y python3-pip && pip install -r requirements.txt
 COPY app/ ./
-EXPOSE 5000
+EXPOSE 80
 CMD ["python","app.py"]
