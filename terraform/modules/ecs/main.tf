@@ -97,23 +97,21 @@ resource "aws_ecs_service" "this" {
   name            = "${var.project_name}-service"
   cluster         = aws_ecs_cluster.this.id
   task_definition = aws_ecs_task_definition.this.arn
-  desired_count   = 1
+  desired_count   = var.desired_count
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = var.public_subnets
-    security_groups = [aws_security_group.ecs.id]
+    subnets          = var.public_subnets
+    security_groups  = [aws_security_group.ecs.id]
     assign_public_ip = true
   }
-}
-
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.app_tg.arn
+    target_group_arn = aws_lb_target_group.app.arn
     container_name   = "app"
     container_port   = var.container_port
   }
 
-  depends_on = [aws_lb_listener.http]
+  depends_on = [aws_lb_listener.http]  # ✅ Correct placement (outside resource)
 }
 
