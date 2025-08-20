@@ -3,22 +3,25 @@ provider "aws" {
 }
 
 module "network" {
-  source = "./modules/network"
-  project_name = var.project_name
+  source              = "./modules/network"
+  vpc_cidr            = var.vpc_cidr
+  public_subnet_cidrs = var.public_subnet_cidrs
+  project_name        = var.project_name
 }
 
 module "ecs" {
-  source = "./modules/ecs"
-  vpc_id          = module.network.vpc_id
-  public_subnets  = module.network.public_subnets
-  project_name = var.project_name
-  cpu          = var.cpu
-  memory       = var.memory
+  source         = "./modules/ecs"
+  vpc_id         = module.network.vpc_id
+  public_subnets = module.network.public_subnets
+  project_name   = var.project_name
+  cpu            = var.cpu
+  memory         = var.memory
   container_port = var.container_port
-  image_uri    = "${module.ecr.repository_url}:latest"  # using repo from ECR module
-  aws_region   = var.aws_region
-  env          = var.env
+  image_uri      = var.image_uri
+  aws_region     = var.aws_region
+  env            = var.env
 }
+
 
 module "remote_backend" {
   source              = "./modules/backend"
