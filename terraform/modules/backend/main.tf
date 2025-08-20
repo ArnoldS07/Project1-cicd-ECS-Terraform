@@ -1,7 +1,11 @@
 # S3 bucket resource
 resource "aws_s3_bucket" "backend" {
   bucket = "arnold-terraform-ecs-proj007"
+  lifecycle {
+    prevent_destroy = true
+  }
 }
+
 
 # Setting S3 bucket ownership controls
 resource "aws_s3_bucket_ownership_controls" "backend" {
