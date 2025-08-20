@@ -1,6 +1,6 @@
 output "alb_dns" {
   description = "Application URL"
-  value       = aws_lb.this.dns_name
+  value       = aws_lb.app_alb.dns_name
 }
 
 output "completion_message" {
