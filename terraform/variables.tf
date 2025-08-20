@@ -16,7 +16,6 @@ variable "memory"         { type = number default = 512 }      # 0.5 GB
 variable "image_uri" {
   description = "Container image URI in ECR"
   type        = string
-  default     = "${data.aws_ecr_repository.app_repo.repository_url}:latest"
 }
 
 # Optional environment variables for the container
