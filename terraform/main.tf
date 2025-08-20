@@ -19,3 +19,9 @@ module "ecs" {
   aws_region   = var.aws_region
   env          = var.env
 }
+
+module "remote_backend" {
+  source              = "./modules/backend"
+  bucket_name         = "terraform-state-backend"
+  dynamodb_table_name = "terraform-state-lock-table"
+}
