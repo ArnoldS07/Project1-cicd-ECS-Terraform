@@ -1,53 +1,6 @@
-variable "project_name" {
-  type = string
-}
-
-variable "aws_region" {
-  type    = string
-  default = "ap-south-1"
-}
-
-variable "vpc_id" {
-  description = "VPC ID where ECS service runs"
-  type        = string
-}
-
+variable "project_name" {}
+variable "vpc_id" {}
 variable "public_subnets" {
-  description = "List of subnet IDs for ECS tasks"
-  type        = list(string)
+  type = list(string)
 }
-
-
-variable "container_port" {
-  type    = number
-  default = 80
-}
-
-variable "desired_count" {
-  type    = number
-  default = 1
-}
-
-variable "cpu" {
-  type    = number
-  default = 256   # 0.25 vCPU
-}
-
-variable "memory" {
-  type    = number
-  default = 512   # 0.5 GB
-}
-
-# This will be set by GitHub Actions during deployment
-variable "image_uri" {
-  description = "Container image URI in ECR"
-  type        = string
-}
-
-# Optional environment variables for the container
-variable "env" {
-  type = map(string)
-  default = {
-    APP_ENV = "dev"
-  }
-}
+variable "image_uri" {}
