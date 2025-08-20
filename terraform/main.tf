@@ -17,10 +17,6 @@ module "ecs" {
   image_uri      = var.image_uri
 }
 
-output "alb_dns" {
-  value = module.ecs.alb_dns
-}
-
 module "remote_backend" {
   source              = "./modules/backend"
   bucket_name         = "terraform-state-backend"
