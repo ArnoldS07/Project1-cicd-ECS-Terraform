@@ -41,8 +41,9 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build -t "$ECR_URL:$IMAGE_TAG" .
-          docker push "$ECR_URL:$IMAGE_TAG"
+          docker build -t ecs-fargate-proj:$commit_id .
+          docker tag ecs-fargate-proj:$commit_id 412353802976.dkr.ecr.ap-south-1.amazonaws.com/ecs-fargate-proj:$commit_id
+          docker push 412353802976.dkr.ecr.ap-south-1.amazonaws.com/ecs-fargate-proj:$commit_id
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
