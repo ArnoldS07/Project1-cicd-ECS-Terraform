@@ -68,4 +68,4 @@ jobs:
       - name: Show Outputs (ALB URL)
         working-directory: terraform
         run: |
-          echo "ALB DNS: $(terraform output -raw alb_dns)"
+          echo "ALB DNS: $(terraform output -raw alb_dns) "
