@@ -1,18 +1,43 @@
-variable "project_name" { type = string }
-variable "aws_region"   { type = string  default = "ap-south-1" }
+variable "project_name" {
+  type = string
+}
 
-variable "vpc_cidr" { type = string default = "10.0.0.0/16" }
+variable "aws_region" {
+  type    = string
+  default = "ap-south-1"
+}
+
+variable "vpc_cidr" {
+  type    = string
+  default = "10.0.0.0/16"
+}
+
 variable "public_subnet_cidrs" {
   type    = list(string)
   default = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-variable "container_port" { type = number default = 80 }
-variable "desired_count"  { type = number default = 1 }
-variable "cpu"            { type = number default = 256 }      # 0.25 vCPU
-variable "memory"         { type = number default = 512 }      # 0.5 GB
+variable "container_port" {
+  type    = number
+  default = 80
+}
 
-# This will be set by GitHub Actions each deployment
+variable "desired_count" {
+  type    = number
+  default = 1
+}
+
+variable "cpu" {
+  type    = number
+  default = 256   # 0.25 vCPU
+}
+
+variable "memory" {
+  type    = number
+  default = 512   # 0.5 GB
+}
+
+# This will be set by GitHub Actions during deployment
 variable "image_uri" {
   description = "Container image URI in ECR"
   type        = string
@@ -20,7 +45,8 @@ variable "image_uri" {
 
 # Optional environment variables for the container
 variable "env" {
-  type    = map(string)
+  type = map(string)
   default = {
     APP_ENV = "dev"
   }
+}
